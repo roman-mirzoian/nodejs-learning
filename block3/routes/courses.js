@@ -3,7 +3,9 @@ const router = Router();
 const Course = require('../models/course');
 
 router.get('/', async (req, res) => {
-  let courses = await Course.find();
+  let courses = await Course.find()
+            .populate('userId', 'email name')
+            .select('price title img');
   courses = courses.map(c => c.toJSON());
 
   res.render('courses', {
